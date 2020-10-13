@@ -15,6 +15,7 @@
   --color-back: var(--color-light);
 
   /* opacity */
+  --global-muted-opacity: 0.6;
 
   /* transitions */
 }
@@ -256,6 +257,11 @@ input::placeholder {
 */
 
 .c-logo {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
 }
 
 /*
@@ -265,9 +271,12 @@ input::placeholder {
 */
 
 .c-sun {
+  width: 22px;
+  fill: var(--color-front);
 }
 
 .c-logo .c-sun {
+  margin-right: 8px;
 }
 
 /*
@@ -283,8 +292,8 @@ input::placeholder {
 }
 
 .c-app__summary {
-    font-size: 28px;
-    line-height: 40px;
+  font-size: 28px;
+  line-height: 40px;
 }
 
 /*
@@ -301,6 +310,10 @@ input::placeholder {
     Utilities: Mute
     Mute with opacity
 */
+
+.u-muted {
+  opacity: var(--global-muted-opacity);
+}
 
 /*------------------------------------*\
 #STATES
