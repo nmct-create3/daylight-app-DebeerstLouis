@@ -1,4 +1,6 @@
 // _ = helper functions
+"http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=61d1de79795cf219660614d049148f0d&units=metric&lang=nl&cnt=1"
+
 function _parseMillisecondsIntoReadableTime(timestamp) {
 	//Get hours from milliseconds
 	const date = new Date(timestamp * 1000);
@@ -16,7 +18,7 @@ function _parseMillisecondsIntoReadableTime(timestamp) {
 // 5 TODO: maak updateSun functie
 
 // 4 Zet de zon op de juiste plaats en zorg ervoor dat dit iedere minuut gebeurt.
-let placeSunAndStartMoving = (totalMinutes, sunrise) => {
+const placeSunAndStartMoving = (totalMinutes, sunrise) => {
 	// In de functie moeten we eerst wat zaken ophalen en berekenen.
 	// Haal het DOM element van onze zon op en van onze aantal minuten resterend deze dag.
 	// Bepaal het aantal minuten dat de zon al op is.
@@ -30,19 +32,28 @@ let placeSunAndStartMoving = (totalMinutes, sunrise) => {
 };
 
 // 3 Met de data van de API kunnen we de app opvullen
-let showResult = queryResponse => {
+const showResult = queryResponse => {
+	console.log({queryResponse});
 	// We gaan eerst een paar onderdelen opvullen
 	// Zorg dat de juiste locatie weergegeven wordt, volgens wat je uit de API terug krijgt.
+	document.querySelector('.js-location').innerText = `${queryResponse.city.name}, ${queryResponse.city.country}`;
 	// Toon ook de juiste tijd voor de opkomst van de zon en de zonsondergang.
+	document.querySelector('.js-sunrise').innerText = _parseMillisecondsIntoReadableTime(queryResponse.city.sunrise);
+	document.querySelector('.js-sunset').innerText = _parseMillisecondsIntoReadableTime(queryResponse.city.sunset) ;
 	// Hier gaan we een functie oproepen die de zon een bepaalde positie kan geven en dit kan updaten.
+	
 	// Geef deze functie de periode tussen sunrise en sunset mee en het tijdstip van sunrise.
 };
 
 // 2 Aan de hand van een longitude en latitude gaan we de yahoo wheater API ophalen.
-let getAPI = (lat, lon) => {
+const getAPI = async (lat, lon) => {
 	// Eerst bouwen we onze url op
+	const data = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=61d1de79795cf219660614d049148f0d&units=metric&lang=nl&cnt=1`)
+	.then((r) => r.json())
+	.catch((err) => console.error('An error occured:', err))
 	// Met de fetch API proberen we de data op te halen.
 	// Als dat gelukt is, gaan we naar onze showResult functie.
+	showResult(data)
 };
 
 document.addEventListener('DOMContentLoaded', function() {
